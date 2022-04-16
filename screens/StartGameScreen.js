@@ -1,7 +1,8 @@
 import { TextInput, View, StyleSheet, Alert, Keyboard } from "react-native";
 import { useState } from "react";
-import PrimaryButton from "../components/PrimaryButton";
+import PrimaryButton from "../components/UI/PrimaryButton";
 import Colors from "../constants/colors";
+//
 const StartGameScreen = ({ onPickNumber }) => {
   const [enteredNumber, setEneteredNumber] = useState("");
 
@@ -15,7 +16,6 @@ const StartGameScreen = ({ onPickNumber }) => {
 
   const confirmInputHandler = () => {
     const choosenNumber = parseInt(enteredNumber);
-    Keyboard.dismiss();
     if (isNaN(choosenNumber) || enteredNumber <= 0 || enteredNumber > 99) {
       setTimeout(() => {
         Alert.alert(
@@ -70,12 +70,12 @@ const styles = StyleSheet.create({
   },
 
   numberInput: {
-    color: "#ddb52f",
+    color: Colors.accent500,
     fontSize: 32,
     fontWeight: "bold",
     height: 50,
     width: 50,
-    borderBottomColor: "#ddb52f",
+    borderBottomColor: Colors.accent500,
     borderBottomWidth: 2,
     textAlign: "center",
     marginBottom: 10,
