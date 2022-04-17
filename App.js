@@ -5,30 +5,43 @@ import { LinearGradient } from "expo-linear-gradient";
 import Colors from "./constants/colors";
 import StartGameScreen from "./screens/StartGameScreen";
 import GameScreen from "./screens/GameScreen";
-
+import GameOverScreen from "./screens/GameOverScreen";
 export default function App() {
   const [userNumber, setUserNumber] = useState();
+  const [gameIsOver, setGameIsOver] = useState(true);
 
   const pickedNumberHandler = (pickedNumber) => {
     setUserNumber(pickedNumber);
+    setGameIsOver(false);
+  };
+  const gameOverHandler = () => {
+    if (!gameIsOver) {
+      setGameIsOver(true);
+    } else {
+      setGameIsOver(false);
+      setUserNumber();
+    }
   };
   let screen = <StartGameScreen onPickNumber={pickedNumberHandler} />;
 
   if (userNumber) {
-    screen = <GameScreen userNumber={userNumber} />;
+    screen = (
+      <GameScreen userNumber={userNumber} onGameOver={gameOverHandler} />
+    );
+  }
+  if (gameIsOver && userNumber) {
+    screen = <GameOverScreen onGameOver={gameOverHandler} />;
   }
 
   return (
     <LinearGradient
       style={styles.rootContainer}
-      colors={[Colors.primary500, "hsl(51, 76%, 50%)", "#ecd551"]}
-    >
+      colors={[Colors.primary500, "#ecd551"]}>
       <ImageBackground
         source={require("./assets/background.png")}
         resizeMode="cover"
         style={styles.rootContainer}
-        imageStyle={styles.imageBackground}
-      >
+        imageStyle={styles.imageBackground}>
         <SafeAreaView style={styles.rootContainer}>{screen}</SafeAreaView>
       </ImageBackground>
     </LinearGradient>
