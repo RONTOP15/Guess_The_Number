@@ -2,10 +2,14 @@ import { Text, View, StyleSheet } from "react-native";
 import PrimaryButton from "../components/UI/PrimaryButton";
 import { Button } from "react-native-web";
 import Colors from "../constants/colors";
-const GameOverScreen = ({ onGameOver }) => {
+const GameOverScreen = ({ onGameOver, logRounds }) => {
+  console.log(logRounds);
   return (
     <View style={styles.container}>
       <Text style={styles.text}>Game Over</Text>
+      <Text style={styles.text}>
+        Computer Wins in {logRounds.length} times!
+      </Text>
       <View>
         <PrimaryButton onPress={onGameOver}>Play Again</PrimaryButton>
       </View>

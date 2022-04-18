@@ -1,11 +1,15 @@
 import { useState } from "react";
 
-import { View, Text, StyleSheet, Alert } from "react-native";
-import Title from "../components/UI/Title";
+import { View, Text, StyleSheet, Alert, ScrollView } from "react-native";
+import { useEffect } from "react/cjs/react.development";
+import { Ionicons } from "@expo/vector-icons";
 
+import Title from "../components/UI/Title";
+import Card from "../components/UI/Card";
 import NumberContainer from "../components/game/NumberContainer";
 import PrimaryButton from "../components/UI/PrimaryButton";
-import { useEffect } from "react/cjs/react.development";
+import InstructionText from "../components/UI/InstructionText";
+import LogRounds from "../components/game/LogRounds";
 
 function generateRandomBetween(min, max, exclude) {
   const rndNum = Math.floor(Math.random() * (max - min)) + min;
@@ -19,13 +23,15 @@ function generateRandomBetween(min, max, exclude) {
 let minBoundary = 1;
 let maxBoundary = 100;
 //
-const GameScreen = ({ userNumber, onGameOver }) => {
+const GameScreen = ({ userNumber, onGameOver, addLogHandler, logRounds }) => {
   const initialGuess = generateRandomBetween(1, 100, userNumber);
   const [currentGuess, setCurrentGuess] = useState(initialGuess);
 
   useEffect(() => {
     if (currentGuess === userNumber) {
-      onGameOver();
+      setTimeout(() => {
+        onGameOver();
+      }, 1500);
     }
   }, [userNumber, currentGuess, onGameOver]);
 
@@ -51,49 +57,36 @@ const GameScreen = ({ userNumber, onGameOver }) => {
       currentGuess
     );
 
-    console.log(` direction : ${direction}`);
-    console.log(` newRndNumber : ${newRndNumber}`);
-    console.log(` minBoundary : ${minBoundary}`);
-    console.log(` userNumber : ${userNumber}`);
-    console.log(` maxBoundary : ${maxBoundary}`);
-    console.log("-----------");
     setCurrentGuess(newRndNumber);
+    addLogHandler(newRndNumber);
   };
-  // if (currentGuess == userNumber) {
-  //   Alert.alert(
-  //     "Game Over",
-  //     "The Application Guessed Your number wich is " + currentGuess + " !",
-  //     [
-  //       {
-  //         text: "Try Again",
-  //         style: "destructive",
-  //         onPress: gameOver,
-  //       },
-  //     ]
-  //   );
-  // }
 
   return (
     <View style={styles.screen}>
       <Title>Oppenent's Guess</Title>
       <NumberContainer>{currentGuess}</NumberContainer>
-      <NumberContainer>{userNumber}</NumberContainer>
-      <View>
-        <Text>Higher or Lower</Text>
-        <View>
-          <PrimaryButton onPress={nextGuessHandler.bind(this, "lower")}>
-            -
-          </PrimaryButton>
-          <PrimaryButton onPress={nextGuessHandler.bind(this, "greater")}>
-            +
-          </PrimaryButton>
+      <Card>
+        <InstructionText style={styles.instructionText}>
+          Higher or Lower
+        </InstructionText>
+        <View style={styles.buttonsContainer}>
+          <View style={styles.buttonContainer}>
+            <PrimaryButton onPress={() => nextGuessHandler("lower")}>
+              <Ionicons name="md-remove" size={24} color="white" />
+            </PrimaryButton>
+          </View>
+          <View style={styles.buttonContainer}>
+            <PrimaryButton onPress={() => nextGuessHandler("greater")}>
+              <Ionicons name="md-add" size={24} color="white" />
+            </PrimaryButton>
+          </View>
         </View>
-      </View>
-      <View>
-        <View>
-          <Text>LOG ROUNSD</Text>
-        </View>
-      </View>
+      </Card>
+      <ScrollView>
+        {logRounds.map((round, index) => (
+          <LogRounds key={index}>{round}</LogRounds>
+        ))}
+      </ScrollView>
     </View>
   );
 };
@@ -104,5 +97,14 @@ const styles = StyleSheet.create({
   screen: {
     flex: 1,
     padding: 24,
+  },
+  instructionText: {
+    marginBottom: 14,
+  },
+  buttonsContainer: {
+    flexDirection: "row",
+  },
+  buttonContainer: {
+    flex: 1,
   },
 });

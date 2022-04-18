@@ -25,7 +25,8 @@ const styles = StyleSheet.create({
   },
   numberText: {
     fontSize: 32,
-    fontWeight: "bold",
+    fontFamily: "roboto-bold",
+    // fontWeight: "bold",
     color: Colors.accent500,
   },
 });
