@@ -58,22 +58,24 @@ export default function App() {
   }
   if (gameIsOver && userNumber) {
     screen = (
-      <GameOverScreen logRounds={logRounds} onGameOver={gameOverHandler} />
+      <GameOverScreen
+        userNumber={userNumber}
+        logRounds={logRounds}
+        onGameOver={gameOverHandler}
+      />
     );
   }
 
   return (
     <LinearGradient
       style={styles.rootContainer}
-      colors={[Colors.primary500, "#ecd551"]}
-    >
+      colors={[Colors.primary500, "#ecd551"]}>
       <ImageBackground
         source={require("./assets/images/background.png")}
         resizeMode="cover"
         style={styles.rootContainer}
         imageStyle={styles.imageBackground}
-        ד
-      >
+        ד>
         <SafeAreaView style={styles.rootContainer}>{screen}</SafeAreaView>
       </ImageBackground>
     </LinearGradient>

@@ -35,6 +35,11 @@ const GameScreen = ({ userNumber, onGameOver, addLogHandler, logRounds }) => {
     }
   }, [userNumber, currentGuess, onGjhgameOver]);
 
+  useEffect(() => {
+    minBoundary = 1;
+    maxBoundary = 100;
+  }, []);
+
   const nextGuessHandler = (direction) => {
     if (
       (direction === "lower" && currentGuess < userNumber) ||
@@ -79,14 +84,22 @@ const GameScreen = ({ userNumber, onGameOver, addLogHandler, logRounds }) => {
             <PrimaryButton onPress={() => nextGuessHandler("greater")}>
               <Ionicons name="md-add" size={24} color="white" />
             </PrimaryButton>
+            {/* <PrimaryButton onPress={onGameOver}>Restart</PrimaryButton> */}
           </View>
         </View>
       </Card>
-      <ScrollView>
-        {logRounds.map((round, index) => (
-          <LogRounds key={index}>{round}</LogRounds>
-        ))}
-      </ScrollView>
+      <View style={styles.ListContainer}>
+        <ScrollView>
+          {logRounds
+            .slice(0)
+            .reverse()
+            .map((round, index) => (
+              <LogRounds key={index} index={index}>
+                {round}
+              </LogRounds>
+            ))}
+        </ScrollView>
+      </View>
     </View>
   );
 };
@@ -96,7 +109,7 @@ export default GameScreen;
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
-    padding: 24,
+    padding: 20,
   },
   instructionText: {
     marginBottom: 14,
@@ -106,5 +119,9 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     flex: 1,
+  },
+  ListContainer: {
+    flex: 1,
+    paddingVertical: 24,
   },
 });
