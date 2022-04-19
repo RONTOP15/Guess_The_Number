@@ -33,7 +33,7 @@ const GameScreen = ({ userNumber, onGameOver, addLogHandler, logRounds }) => {
         onGameOver();
       }, 1500);
     }
-  }, [userNumber, currentGuess, onGameOver]);
+  }, [userNumber, currentGuess, onGjhgameOver]);
 
   const nextGuessHandler = (direction) => {
     if (
