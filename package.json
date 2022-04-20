@@ -1,5 +1,5 @@
 {
-  "name": "guess_the_number",
+  "name": "rncourse",
   "version": "1.0.0",
   "main": "node_modules/expo/AppEntry.js",
   "scripts": {
@@ -17,7 +17,6 @@
     "react-native": "0.64.3",
     "react-native-web": "0.17.1",
     "expo-linear-gradient": "~11.0.3",
-    "expo-updates": "~0.11.6",
     "expo-font": "~10.0.4",
     "expo-app-loading": "~1.3.0"
   },

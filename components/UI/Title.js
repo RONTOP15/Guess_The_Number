@@ -1,22 +1,22 @@
-import { Text, StyleSheet } from "react-native";
-import Colors from "../../constants/colors";
-//
-const Title = ({ children, style }) => {
-  return <Text style={[styles.title, style]}>{children}</Text>;
-};
+import { Text, StyleSheet, Platform } from "react-native";
+
+function Title({ children }) {
+  return <Text style={styles.title}>{children}</Text>;
+}
 
 export default Title;
 
 const styles = StyleSheet.create({
   title: {
+    fontFamily: "open-sans-bold",
     fontSize: 24,
-    fontFamily: "roboto-bold",
-    // fontWeight: "bold",
-    textAlign: "center",
+    // fontWeight: 'bold',
     color: "white",
-    borderWidth: 2,
+    textAlign: "center",
+    borderWidth: Platform.OS === "ios" ? 0 : 2,
     borderColor: "white",
-    borderRadius: 4,
     padding: 12,
+    maxWidth: "80%",
+    width: 280,
   },
 });
